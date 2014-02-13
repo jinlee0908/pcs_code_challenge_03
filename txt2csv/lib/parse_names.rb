@@ -19,18 +19,15 @@ class Parse
 
     if prefixes.include? word.first
       parsed_name[:pre] = word.shift
-    else
-      parsed_name[:pre]= ""
     end
     
-    if parsed_name[:last] != "" && word[0] != nil
+    if word[0] != nil
       parsed_name[:first] = word.shift
+      if word[0] != nil
+        parsed_name[:middle] = word.shift
+      end
     end
-
-    if parsed_name[:first] != "" && word[0] != nil
-      parsed_name[:middle] = word.shift
-    end
-
+    puts parsed_name
 
     parsed_name.values 
   end
