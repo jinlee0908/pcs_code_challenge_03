@@ -10,19 +10,11 @@ class Parse
     # otherwise store last word as last name
 
     word = name_string.split
-
     parsed_name[:suffix] = word.pop if suffixes.include? word.last
-    
     parsed_name[:last] = word.pop
-
     parsed_name[:pre] = word.shift if prefixes.include? word.first
-      
     parsed_name[:first] = word.shift if word[0] != nil
-      
     parsed_name[:middle] = word.shift if word[0] != nil
-      
-    puts parsed_name
-
     parsed_name.values 
   end
 end
