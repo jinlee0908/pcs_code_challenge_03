@@ -1,6 +1,6 @@
 require "spec_helper"
 
-require "parse_names.rb"
+require "parse.rb"
 
 # The format of the names looks to be something like:
 
@@ -17,9 +17,52 @@ require "parse_names.rb"
 prefixes = ['M.', 'Mrs.', 'Mr.', 'Dr.', 'Ms.', 'Sister', "Lady"]
 suffixes = %w(Jr. Sr. II III IV PhD.)
 
+#country_code area_code prefix line extension
 
 describe Parse do
 
+  it "should parse ddd-ddd-dddd xddd phone numbers" do   
+    return_array = Parse.parse_phone("123-456-7890 x213")
+    expect(return_array).to eq(["", "123","456","7890","213"])
+  end
+
+  it "should parse (ddd)ddd-dddd xddd phone numbers" do   
+    return_array = Parse.parse_phone("(123)456-7890 x213")
+    expect(return_array).to eq(["", "123","456","7890","213"])
+  end
+
+  it "should parse d-ddd-ddd-dddd xddd phone numbers" do   
+    return_array = Parse.parse_phone("3-123-456-7890 x213")
+    expect(return_array).to eq(["3", "123","456","7890","213"])
+  end
+
+  it "should parse ddd.ddd.dddd xddd phone numbers" do   
+    return_array = Parse.parse_phone("123.456.7890 x213")
+    expect(return_array).to eq(["", "123","456","7890","213"])
+  end
+
+  it "should parse ddd-ddd-dddd phone numbers" do   
+    return_array = Parse.parse_phone("123-456-7890")
+    expect(return_array).to eq(["", "123","456","7890",""])
+  end
+
+  it "should parse (ddd)ddd-dddd phone numbers" do   
+    return_array = Parse.parse_phone("(123)456-7890")
+    expect(return_array).to eq(["", "123","456","7890",""])
+  end
+
+  it "should parse d-ddd-ddd-dddd phone numbers" do   
+    return_array = Parse.parse_phone("3-123-456-7890")
+    expect(return_array).to eq(["3", "123","456","7890",""])
+  end
+
+  it "should parse ddd.ddd.dddd phone numbers" do   
+    return_array = Parse.parse_phone("123.456.7890")
+    expect(return_array).to eq(["", "123","456","7890",""])
+  end
+
+
+##old specs to keep
   it "should parse last names" do   
     return_array = Parse.parse_names(prefixes, suffixes, "Madona")
     expect(return_array).to eq(["","","","Madona",""])
