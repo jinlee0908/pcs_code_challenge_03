@@ -20,6 +20,30 @@ suffixes = %w(Jr. Sr. II III IV PhD.)
 #country_code area_code prefix line extension
 
 describe Parse do
+  it "should parse email addresses without a name" do   
+    return_array = Parse.parse_email("@more.com")
+    expect(return_array).to eq(["Not Found"])
+  end
+
+  it "should parse email addresses without @" do   
+    return_array = Parse.parse_email("gooblygook")
+    expect(return_array).to eq(["Not Found"])
+  end
+
+  it "should parse correct email addresses" do   
+    return_array = Parse.parse_email("gooblygook@more.com")
+    expect(return_array).to eq(["gooblygook@more.com"])
+  end
+
+  it "should parse twitter handles" do   
+    return_array = Parse.parse_twitter("gooblygook")
+    expect(return_array).to eq(["gooblygook"])
+  end
+
+  it "should parse twitter handles" do   
+    return_array = Parse.parse_twitter("@gooblygook")
+    expect(return_array).to eq(["gooblygook"])
+  end
 
   it "should parse ddd-ddd-dddd xddd phone numbers" do   
     return_array = Parse.parse_phone("123-456-7890 x213")
@@ -61,8 +85,6 @@ describe Parse do
     expect(return_array).to eq(["", "123","456","7890",""])
   end
 
-
-##old specs to keep
   it "should parse last names" do   
     return_array = Parse.parse_names(prefixes, suffixes, "Madona")
     expect(return_array).to eq(["","","","Madona",""])

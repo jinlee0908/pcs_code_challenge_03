@@ -1,5 +1,4 @@
 class Parse
-
     def self.parse_names (prefixes, suffixes, name_string)
 
         parsed_name = {pre:"", first:"", middle:"", last:"", suffix:""}
@@ -16,6 +15,7 @@ class Parse
         parsed_name[:middle] = word.shift if word[0] != nil
         parsed_name.values 
     end
+
     def self.parse_phone (phone_string)
 
         parsed_phone = {country_code:"", area_code:"", prefix:"", line:"", extension:""}
@@ -43,6 +43,18 @@ class Parse
 
         parsed_phone.values
     end
+
+    def self.parse_twitter (twitter_string)
+        parsed_twitter = []
+        if twitter_string.include?("@")
+            parsed_twitter.push(twitter_string[1..15])
+        else
+            parsed_twitter.push(twitter_string[0..14])
+        end
+    end
+
+    def self.parse_email (email_string)
+        parsed_email = []
+        email_string.match(/\w+\@\w+.\w+/) ? parsed_email.push(email_string) : parsed_email = ["Not Found"]
+    end
 end
-
-
